@@ -1,49 +1,21 @@
-# TARGET NAME
-TARGET := ex02
+TARGET := thread1
+SRC := $(TARGET).c
+OBJ := $(TARGET).o
 
 
-# OBJECT FILES
-OBJS := ex02.o
+CFLAGS := -g -Wall
+LFLAGS := -lm -pthread
+CC := gcc $(CFLAGS) $(LFLAGS)
 
-# SOURCE FILES
-SRCS := $(OBJS:%.o=%.c)
 
-# COMPILER TYPE
-CC := gcc
+all : $(TARGET)
 
-# COMPILER OPTION
-CFLAGS := -g -Wall -Wextra -DDEEBUG=1
 
-#DYNAMIC LIBRARY
-#LDFLAGS := -lpthread
-
-#MAKE ALL(PHONY TARGET)
-.PHONY: all
-all:$(TARGET)
-
-# LINK OBJECTS
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
-
-#COMPILE SOURCES
-./%.o: ./%.c
-	$(CC) $(CFLAGS) -c $<
-
-# UPDATE HEADER FILE
-#$(OBJS): *.h
-
-#CLEAN FILES (PHONY TARGET)
-.PHONY: clean
+$(TARGET): $(OBJ) 
+	$(CC) -o $@ $^ $(LFLAGS)
+.c.o:
+	$(CC) -c $^
 clean:
-	rm -f *~$(TARGET)
-
-
-
-
-$(TARGET): $(TARGET).c
-gcc -o ex02 ex02.c
-
-
-
+	rm -f $(TARGET) $(OBJ)
 
 
